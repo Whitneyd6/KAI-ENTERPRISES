@@ -1,0 +1,47 @@
+{% extends 'store/base.html' %}
+
+{% block title %}{{ department.name }} | KAI-ENTERPRISES{% endblock %}
+
+{% block content %}
+  <p><a class="back-link" href="{% url 'dashboard' %}">&larr; Back to dashboard</a></p>
+
+  <h1>{{ department.name }}</h1>
+  <p class="lead">{{ department.description|default:"Equipment available from this department." }}</p>
+
+  {% if equipment %}
+    <div class="table-wrap">
+      <table class="equipment-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>In stock</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in equipment %}
+            <tr>
+              <td><strong>{{ item.name }}</strong></td>
+              <td>{{ item.description|default:"-" }}</td>
+              <td>{{ item.price }}</td>
+              <td>{{ item.quantity_in_stock }}</td>
+              <td>
+                {% if item.quantity_in_stock == 0 %}
+                  <span class="badge out">Out of stock</span>
+                {% elif item.quantity_in_stock <= 5 %}
+                  <span class="badge low">Low stock</span>
+                {% else %}
+                  <span class="badge ok">In stock</span>
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <p>No equipment has been added to this department yet.</p>
+  {% endif %}
+{% endblock %}

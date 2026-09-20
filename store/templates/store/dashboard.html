@@ -1,0 +1,24 @@
+{% extends 'store/base.html' %}
+
+{% block title %}Dashboard | KAI-ENTERPRISES{% endblock %}
+
+{% block content %}
+  <h1>Dashboard</h1>
+  <p class="lead">An overview of our departments and the equipment they sell.</p>
+
+  <div class="card-grid">
+    {% for department in departments %}
+      <section class="dept-card">
+        <h2>{{ department.name }}</h2>
+        <p>{{ department.description|default:"No description yet." }}</p>
+        <ul class="stats">
+          <li><strong>{{ department.item_count }}</strong> equipment types</li>
+          <li><strong>{{ department.total_stock|default:0 }}</strong> units in stock</li>
+        </ul>
+        <a class="card-link" href="{% url 'department_detail' department.slug %}">View equipment &rarr;</a>
+      </section>
+    {% empty %}
+      <p>No departments yet. Add some in the <a href="/admin/">admin</a>.</p>
+    {% endfor %}
+  </div>
+{% endblock %}

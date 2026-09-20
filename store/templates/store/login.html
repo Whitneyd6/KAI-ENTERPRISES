@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login | KAI-ENTERPRISES</title>
+  <link rel="stylesheet" href="{% static 'store/style.css' %}">
+</head>
+<body class="login-page">
+  <main class="login-card">
+    <h1>KAI-ENTERPRISES</h1>
+    <p class="subtitle">School of Medicine · School of Law · School of Computer Science</p>
+
+    {% if form.errors %}
+      <p class="error">Incorrect username or password. Please try again.</p>
+    {% endif %}
+
+    <form method="post">
+      {% csrf_token %}
+      <label for="id_username">Username</label>
+      <input type="text" name="username" id="id_username" autofocus required>
+
+      <label for="id_password">Password</label>
+      <input type="password" name="password" id="id_password" required>
+
+      <input type="hidden" name="next" value="{{ next }}">
+      <button type="submit">Log in</button>
+    </form>
+  </main>
+</body>
+</html>
